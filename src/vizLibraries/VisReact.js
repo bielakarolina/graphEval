@@ -20,12 +20,78 @@ const graph = {
 
 const options = {
     layout: {
-        hierarchical: true
+        randomSeed: 32
+    },
+    groups: {
+        0: {color: "#fff400"},
+        1: {color: "#e35e94"},
+        2: {color: "#5ee3ad"},
+        3: {color: "#ad5ee3"},
+        4: {color: "#fff400"},
+        5: {color: "#f67307"},
+        6: {color: "#07d8f6"},
+        7: {color: "#f4a9e6 "},
+        8: {color: "#b73461"},
+        9: {color: "#6dce3a"},
+        10: {color: "#c062ea"},
+
+    },
+    nodes: {
+        shape: "dot",
+        size: 50,
+        color: "#e35e94",
+        borderWidth: 0,
+        borderWidthSelected: 2,
+
+        font: {
+            size: 15,
+            align: "center",
+            color: "#ffffff",
+            bold: {
+                color: "#ffffff",
+                size: 15,
+                vadjust: 0,
+                mod: "bold"
+            }
+        }
     },
     edges: {
-        color: '#000000'
+        width: 1,
+        color: {
+            color: "#D3D3D3",
+            highlight: "#f67307",
+            hover: "#e35e94",
+            opacity: 1.0
+        },
+        arrows: {
+            to: {enabled: true, scaleFactor: 1, type: "arrow"},
+            middle: {enabled: false, scaleFactor: 1, type: "arrow"},
+            // from: { enabled: true, scaleFactor: 1, type: "arrow" }
+        },
+        smooth: {
+            type: "continuous",
+            roundness: 0
+        }
     },
-    interaction: { hoverEdges: true }
+    physics: {
+        barnesHut: {
+            gravitationalConstant: -30000,
+            centralGravity: 1,
+            springLength: 70,
+            avoidOverlap: 1
+        },
+        stabilization: {iterations: 1000}
+    },
+    interaction: {
+        hover: true,
+        hoverConnectedEdges: true,
+        selectable: true,
+        selectConnectedEdges: false,
+        zoomView: true,
+        navigationButtons: true,
+        keyboard: true,
+        dragView: true
+    }
 };
 
 export default class VisReact extends Component {
