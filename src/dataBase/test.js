@@ -8,7 +8,7 @@ module.exports = {
 
         async function runQuery() {
             let nodes = await neo.queryNeoData(queryNodes);
-            let edges = await neo.queryNeoData(queryConnes);
+            let edges = await neo.queryNeoData(queryConnes,true);
 
             return {nodes: nodes, edges: edges}
         }
@@ -36,9 +36,10 @@ module.exports = {
             "MERGE (owner)-[:ASKED]->(question)";
 
         let queryForDisplay = "Match (n)-[r]->(m) Return n,r,m limit 25";
+        let queryTestForDisplay = "Match (n:User)-[r:PROVIDED]->(m:Answer)-[k]->(q:Question)-[h]->(t:Tag) Return n,type(r),m,type(k),q,type(h),t ";
         async function runQuery() {
             let loadData = await neo.queryNeoData(loadStackOverflowData);
-            let testQuery = await neo.queryNeoData(queryForDisplay,true);
+            let testQuery = await neo.queryNeoData(queryTestForDisplay,true);
 
             return testQuery
         }
