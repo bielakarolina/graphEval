@@ -1,7 +1,7 @@
 const neo4j = require('neo4j-driver');
 module.exports = {
 
-    queryNeoData: async function (query) {
+    queryNeoData: async function (query,log=false) {
         let uri = 'neo4j://localhost:7687';
         let user = "neo4j";
         let password = "root";
@@ -15,8 +15,7 @@ module.exports = {
                 records.forEach(record => {
                     fields.push(record._fields[0])
                 });
-
-                //console.log(fields)
+                if(log) console.log(fields)
             } finally {
                 session.close();
                 driver.close();

@@ -8,9 +8,16 @@ res.send("API is working properly");
 
 router.get("/data",async function(req, res, next) {
     const test = require("../../src/dataBase/test");
-    let data = await test.doIt();
-    console.log(data);
+    let data = await test.simpleVisData();
+    let cleanNeo4JDataBase = await test.cleanNeo4JDataBase();
     res.send({data: data});
+});
+
+router.get("/dataD3",async function(req, res, next) {
+    const test = require("../../src/dataBase/test");
+    let dataStackOverflow = await test.loadStackOverflowData();
+    let cleanNeo4JDataBase = await test.cleanNeo4JDataBase();
+    res.send({data: dataStackOverflow});
 });
 
 module.exports = router;
