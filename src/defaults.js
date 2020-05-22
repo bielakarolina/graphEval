@@ -28,11 +28,11 @@ export const Button = styled.button`
     width: ${props => props.width ? props.width : '170px'};;
     height: ${props => props.height ? props.height : '50px'};
     font-size: ${props => props.font ? props.font : '24px'};
-    color:#57cab0;
+    color:  ${props => props.color ? props.color : '#57cab0'};
     margin: 0 7px;
     background-color: #2e2e2e;
     text-align:center;
-    border: 1.5px solid #57cab0;
+    border: ${props => props.small ? '1px solid pink' : '#57cab0'};
     font-family: 'Lato', sans-serif;    
     text-transform:uppercase;
     font-weight:400;
@@ -40,18 +40,18 @@ export const Button = styled.button`
     letter-spacing:1px;
     
     &:hover{
-        background-color:#57cab0;
-        box-shadow:1px 1px 25px #57cab0;
+        background-color:${props => props.color ? props.color : '#57cab0'};
+        box-shadow: ${props => props.small ? '1px 1px 10px pink' : '1px 1px 25px #57cab0'};
         color:#2e2e2e;
     }
 `;
 
 export const Title = styled.h3`
-   color:#57cab0;
+   color:${props => props.color ? props.color : '#57cab0'};
    font-family: 'Lato', sans-serif;   
    font-weight:400;
-   padding: 7px; 
-   font-size: 24px;
+   padding: ${props => props.small ? '0' : '7px'}; 
+   font-size: ${props => props.small ? '18px' : '24px'};
 `;
 
 const breatheAnimation = keyframes`
