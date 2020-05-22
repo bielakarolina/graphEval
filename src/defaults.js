@@ -32,7 +32,7 @@ export const Button = styled.button`
     margin: 0 7px;
     background-color: #2e2e2e;
     text-align:center;
-    border: ${props => props.small ? '1px solid pink' : '#57cab0'};
+    border: ${props => props.small ? '1px solid pink' : '1.5px solid #57cab0'};
     font-family: 'Lato', sans-serif;    
     text-transform:uppercase;
     font-weight:400;
