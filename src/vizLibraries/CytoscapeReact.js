@@ -6,7 +6,7 @@ export default class CytoscapeReact extends Component {
         super(props);
         this.state = {
             layout: {
-                name: 'random'//'grid' //random, circle, concentric
+                name: 'circle'//'grid' //random, circle, concentric
             },
             elements: [{
                 "data": {
@@ -5262,10 +5262,7 @@ export default class CytoscapeReact extends Component {
     }
     }
 
-        render()
-        {
-
-            return <CytoscapeComponent elements={this.state.elements} style={{width: '80vw', height: '100vh'}} layout={this.state.layout}/>;
-        }
-
+    render(){
+        return <CytoscapeComponent elements={this.state.elements} style={{width: '80vw', height: '100vh'}} layout={this.state.layout}/>;
+    }
 }

@@ -16,7 +16,7 @@ export const Form = (props) => {
                 return(
                     <InputWrapper key={index}>
                         <label htmlFor={field.name}>{field.label}</label>
-                        <input required={true} type={field.type} name={field.name}/>
+                        <input required={true} type={field.type} name={field.name} onChange={field.change} value={field.value}/>
                     </InputWrapper>
                 )
             })}

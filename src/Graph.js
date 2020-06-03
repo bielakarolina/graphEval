@@ -28,48 +28,49 @@ export default class Graph extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading:false,
             graph: [],
             availLibs: ['Vis', 'D3', 'Cytoscape'],
             availDataSets: ['Test', 'BigData', 'Cars', 'Weather', 'Bank transactions'],
-            //availDataBases: ['Neo4J', 'OrionDB', 'ArangoDB'],
-            currentDataBase: 'Neo4J',
             currentLib: null,
             currentDataSet: 'Test'
         };
         this.getData = this.getData.bind(this);
         this.handleLibChange = this.handleLibChange.bind(this);
         this.handleDataSetChange = this.handleDataSetChange.bind(this);
-        this.handleDataBaseChange = this.handleDataBaseChange.bind(this);
     }
 
     async componentDidMount(){
-       // await this.getData()
+         this.setState({isLoading:true});
+         await this.getData()
     }
 
     async getData() {
-        await fetch(`http://localhost:9000/data`)
+        await fetch(`http://localhost:9000/data/${this.state.currentLib}/${this.state.currentDataSet}`)
             .then(res => res.json())
             .then(
                 result => {
                     this.setState({
                         graph: result.data,
+                        isLoading:false
                     });
                 }
             );
     }
 
-    handleLibChange(name){
-        this.setState({currentLib: name});
+    async handleLibChange(name){
+        await this.setState({isLoading:true,currentLib: name});
+        await this.getData();
     }
-    handleDataSetChange(name){
-        this.setState({currentDataSet: name});
+
+    async handleDataSetChange(name){
+        await this.setState({isLoading:true,currentDataSet: name});
+        await this.getData();
     }
 
     renderOptions = () => {
-
         return(
             <OptionsWrapper>
-
                 <Title small color='pink'>Libraries</Title>
                 {this.state.availLibs.map(lib => {
                     return <OptionButton key={lib} click={() => this.handleLibChange(lib)} name={lib}/>
@@ -79,17 +80,16 @@ export default class Graph extends Component {
                 {this.state.availDataSets.map(lib => {
                     return <OptionButton key={lib} click={() => this.handleDataSetChange(lib)} name={lib}/>
                 })}
-
             </OptionsWrapper>
         );
-
     };
 
     render() {
         const {
-            currentDataBase,
             currentLib,
-            currentDataSet
+            currentDataSet,
+            isLoading,
+            graph
         } = this.state;
 
         return (
@@ -98,12 +98,14 @@ export default class Graph extends Component {
                     <Title color='pink'>Testing options</Title>
                     {this.state.availLibs && this.renderOptions()}
                 </OptionsContainer>
-                {/*this.state.graph.nodes &&*/ currentLib &&
+                {isLoading && <Title>Loading...</Title>}
+
+                {this.state.graph.nodes && currentLib && !isLoading &&
                 <GraphContainer>
-                    <Title color='pink'>Currently using: <bold>{currentLib}</bold> with {currentDataBase} on {currentDataSet} dataset </Title>
-                    {currentLib === 'Vis' && <VisReact graph={this.state.graph}/>}
-                    {currentLib === 'D3' && <D3React graph={this.state.graph}/>}
-                    {currentLib === 'Cytoscape' && <CytoscapeReact graph={this.state.graph}/>}
+                    <Title color='pink'>Currently using: <bold>{currentLib}</bold> with Neo4J on {currentDataSet} dataset </Title>
+                    {currentLib === 'Vis' && <VisReact graph={graph}/>}
+                    {currentLib === 'D3' && <D3React graph={graph}/>}
+                    {currentLib === 'Cytoscape' && <CytoscapeReact graph={graph}/>}
                 </GraphContainer>
                 }
             </Wrapper>

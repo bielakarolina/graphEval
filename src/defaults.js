@@ -90,3 +90,14 @@ export const InputWrapper = styled.div`
         animation-iteration-count: infinite;
     }
 `;
+
+
+export const Alert = styled.div`
+    font-family: 'Lato',sans-serif;
+    text-transform: uppercase;
+    background-color: ${props => props.success ? '#57cab0' : '#ff2647'} ;
+    border-radius:2px;
+    padding: 10px;
+    width: 370px;
+    margin: 30px auto;
+`;
