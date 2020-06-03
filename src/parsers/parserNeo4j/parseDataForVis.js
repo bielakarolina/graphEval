@@ -2,15 +2,16 @@ module.exports = {
 
     parseNeo4jDataForVis: async function () {
         const test = require("../../dataBase/test");
-        let dataStackOverflow = await test.loadStackOverflowData();
+        let data = await test.loadBbcFoodData();
+        let keys = data.keys;
         let nodes = [];
         let edges = [];
         let ids = {};
         let groups ={};
-        dataStackOverflow.forEach(function (fields) {
+        data.data.forEach(function (fields) {
             let c = 0;
             fields.forEach(function (singleField, index) {
-                if (index % 2 !== 1) {
+                if (!keys[index].includes("type")) {
                     let id = singleField["identity"];
                     let label = singleField["labels"];
                     let properties = singleField["properties"];
@@ -55,15 +56,16 @@ module.exports = {
 
     parseNeo4jDataForD3: async function () {
         const test = require("../../dataBase/test");
-        let dataStackOverflow = await test.loadStackOverflowData();
+        let data = await test.loadBbcFoodData();
+        let keys = data.keys;
         let nodes = [];
         let edges = [];
         let ids = {};
         let groups ={};
-        dataStackOverflow.forEach(function (fields) {
+        data.data.forEach(function (fields) {
             let c = 0;
             fields.forEach(function (singleField, index) {
-                if (index % 2 !== 1) {
+                if (!keys[index].includes("type")) {
                     let id = singleField["identity"];
                     let label = singleField["labels"];
                     let properties = singleField["properties"];
@@ -107,18 +109,19 @@ module.exports = {
     },
     parseNeo4jDataForCytoscape: async function () {
         const test = require("../../dataBase/test");
-        let dataStackOverflow = await test.loadStackOverflowData();
+        let data = await test.loadBbcFoodData();
+        let keys = data.keys;
         let elements = [];
         let edges = [];
         let ids = {};
         let groups ={};
-        dataStackOverflow.forEach(function (fields) {
+        data.data.forEach(function (fields) {
             let c = 0;
             fields.forEach(function (singleField, index) {
                 let data = {};
 
 
-                if (index % 2 !== 1) {
+                if (!keys[index].includes("type")) {
                     let position = {"position":{"x":1452.639173965406,"y":609.3619416544145}};
                     data = {position};
 

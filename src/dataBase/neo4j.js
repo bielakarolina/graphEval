@@ -7,21 +7,23 @@ module.exports = {
         let password = "root";
         const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
         const session = driver.session();
-        const fields = [];
+        const fields = {};
         const allFields = [];
+        let keys = {};
 
         try {
                 const {records} = await session.run(query);
                 records.forEach(record => {
-                    fields.push(record._fields[0]);
                     allFields.push(record._fields)
                 });
+                keys  = records[0].keys;
+               // console.log(keys)
                 if(log) console.log(allFields)
             } finally {
                 session.close();
                 driver.close();
             }
-        return allFields;
+        return {data: allFields,keys: keys};
 
 
 
