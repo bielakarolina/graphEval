@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import VisReact from './vizLibraries/VisReact'
+import D3React from './vizLibraries/D3React'
 import {Wrapper, Title} from "./defaults";
 import {OptionButton} from "./components/OptionButton";
+import CytoscapeReact from "./vizLibraries/CytoscapeReact";
 
 const GraphContainer = styled.div`
     padding:0;
@@ -29,9 +31,9 @@ export default class Graph extends Component {
             graph: [],
             availLibs: ['Vis', 'D3', 'Cytoscape'],
             availDataSets: ['Test', 'BigData', 'Cars', 'Weather', 'Bank transactions'],
-            availDataBases: ['Neo4J', 'OrionDB', 'ArangoDB'],
+            //availDataBases: ['Neo4J', 'OrionDB', 'ArangoDB'],
             currentDataBase: 'Neo4J',
-            currentLib: 'Vis',
+            currentLib: null,
             currentDataSet: 'Test'
         };
         this.getData = this.getData.bind(this);
@@ -41,7 +43,7 @@ export default class Graph extends Component {
     }
 
     async componentDidMount(){
-        await this.getData()
+       // await this.getData()
     }
 
     async getData() {
@@ -62,9 +64,6 @@ export default class Graph extends Component {
     handleDataSetChange(name){
         this.setState({currentDataSet: name});
     }
-    handleDataBaseChange(name){
-        this.setState({currentDataBase: name});
-    }
 
     renderOptions = () => {
 
@@ -73,17 +72,12 @@ export default class Graph extends Component {
 
                 <Title small color='pink'>Libraries</Title>
                 {this.state.availLibs.map(lib => {
-                    return <OptionButton click={() => this.handleLibChange(lib)} name={lib}/>
+                    return <OptionButton key={lib} click={() => this.handleLibChange(lib)} name={lib}/>
                 })}
 
                 <Title small color='pink'> DataSets</Title>
                 {this.state.availDataSets.map(lib => {
-                    return <OptionButton click={() => this.handleDataSetChange(lib)} name={lib}/>
-                })}
-
-                <Title small color='pink'>Databases</Title>
-                {this.state.availDataBases.map(lib => {
-                    return <OptionButton click={() => this.handleDataBaseChange(lib)} name={lib}/>
+                    return <OptionButton key={lib} click={() => this.handleDataSetChange(lib)} name={lib}/>
                 })}
 
             </OptionsWrapper>
@@ -102,13 +96,14 @@ export default class Graph extends Component {
             <Wrapper row>
                 <OptionsContainer>
                     <Title color='pink'>Testing options</Title>
-
                     {this.state.availLibs && this.renderOptions()}
                 </OptionsContainer>
-                {this.state.graph.nodes &&
+                {/*this.state.graph.nodes &&*/ currentLib &&
                 <GraphContainer>
                     <Title color='pink'>Currently using: <bold>{currentLib}</bold> with {currentDataBase} on {currentDataSet} dataset </Title>
-                    <VisReact graph={this.state.graph}/>
+                    {currentLib === 'Vis' && <VisReact graph={this.state.graph}/>}
+                    {currentLib === 'D3' && <D3React graph={this.state.graph}/>}
+                    {currentLib === 'Cytoscape' && <CytoscapeReact graph={this.state.graph}/>}
                 </GraphContainer>
                 }
             </Wrapper>
