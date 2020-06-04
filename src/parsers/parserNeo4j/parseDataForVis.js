@@ -6,6 +6,8 @@ module.exports = {
             return await test.loadBbcFoodData();
         else if(dataSetType === "stackoverflow")
             return await test.loadStackOverflowData();
+        else if(dataSetType === "movies")
+            return await test.loadMoviesData();
     },
 
     getNodesStructureForLibrary : async function(libraryType){

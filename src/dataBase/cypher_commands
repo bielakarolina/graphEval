@@ -58,3 +58,7 @@ FOREACH (collection IN collections |
   MERGE (c:Collection {name: collection})
   MERGE (r)-[:COLLECTION]->(c)
 );
+
+--------------------------------------------------------------------------
+:play movies
+

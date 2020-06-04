@@ -8,8 +8,9 @@ export default class CytoscapeReact extends Component {
             layout: {
                 name: 'random'//'grid' //random, circle, concentric
             },
-            elements : []
-        }
+            elements : this.props.graph.elements
+
+    }
     }
 
     componentDidMount(){
