@@ -7,10 +7,7 @@ export default class D3React extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : {
-                nodes: [{ id: 'Harry' }, { id: 'Sally' }, { id: 'Alice' }],
-                links: [{ source: 'Harry', target: 'Sally' }, { source: 'Harry', target: 'Alice' }]
-            },
+            data : this.props.graph,
             myConfig: {
                 nodeHighlightBehavior: true,
                 node: {
@@ -24,10 +21,6 @@ export default class D3React extends Component {
             }
         }
     }
-
-    // componentDidMount() {
-    //     this.setState({d3: node});
-    // }
 
     onClickNode(nodeId) {
         window.alert('Clicked node ${nodeId}');
