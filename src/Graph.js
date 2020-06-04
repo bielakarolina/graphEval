@@ -29,9 +29,9 @@ export default class Graph extends Component {
         super(props);
         this.state = {
             isLoading:false,
-            graph: [],
-            availLibs: ['Vis', 'D3', 'Cytoscape'],
-            availDataSets: ['Test', 'BigData', 'Cars', 'Weather', 'Bank transactions'],
+            graph: null,
+            availLibs: ['vis', 'd3', 'cytoscape'],
+            availDataSets: ['stackoverflow', 'bbcfood', 'movies', 'Weather', 'Bank transactions'],
             currentLib: null,
             currentDataSet: 'Test'
         };
@@ -100,12 +100,12 @@ export default class Graph extends Component {
                 </OptionsContainer>
                 {isLoading && <Title>Loading...</Title>}
 
-                {this.state.graph.nodes && currentLib && !isLoading &&
+                {this.state.graph && currentLib && !isLoading &&
                 <GraphContainer>
                     <Title color='pink'>Currently using: <bold>{currentLib}</bold> with Neo4J on {currentDataSet} dataset </Title>
-                    {currentLib === 'Vis' && <VisReact graph={graph}/>}
-                    {currentLib === 'D3' && <D3React graph={graph}/>}
-                    {currentLib === 'Cytoscape' && <CytoscapeReact graph={graph}/>}
+                    {currentLib === 'vis' && <VisReact graph={graph}/>}
+                    {currentLib === 'd3' && <D3React graph={graph}/>}
+                    {currentLib === 'cytoscape' && <CytoscapeReact graph={graph}/>}
                 </GraphContainer>
                 }
             </Wrapper>
