@@ -23,34 +23,27 @@ export default class D3React extends Component {
     }
 
     onClickNode(nodeId) {
-        window.alert('Clicked node ${nodeId}');
     };
 
     onMouseOverNode(nodeId) {
-        window.alert(`Mouse over node ${nodeId}`);
     };
 
     onMouseOutNode(nodeId) {
-        window.alert(`Mouse out node ${nodeId}`);
     };
 
     onClickLink(source, target) {
-        window.alert(`Clicked link between ${source} and ${target}`);
     };
 
     onMouseOverLink(source, target) {
-        window.alert(`Mouse over in link between ${source} and ${target}`);
     };
 
     onMouseOutLink(source, target) {
-        window.alert(`Mouse out link between ${source} and ${target}`);
     };
 
 
     render() {
         return (
             <div>
-                <Title>Tajksldgndflg</Title>
                 <Graph
                     id="graph-id"
                     data={this.state.data}
