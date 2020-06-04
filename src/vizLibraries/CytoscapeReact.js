@@ -31,7 +31,8 @@ export default class CytoscapeReact extends Component {
                 style: {
                     width: 30,
                     height: 30,
-                    backgroundColor: '#e35e94'
+                    backgroundColor: '#e35e94',
+                    fontColor:'#eee'
                 }
             },
             {
