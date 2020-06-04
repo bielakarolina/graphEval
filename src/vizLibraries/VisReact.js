@@ -69,8 +69,7 @@ const options = {
             // from: { enabled: true, scaleFactor: 1, type: "arrow" }
         },
         smooth: {
-            type: "continuous",
-            roundness: 0
+            enabled: false,
         }
     },
     physics: {
@@ -92,7 +91,9 @@ const options = {
         keyboard: true,
         dragView: true
     }
+
 };
+
 
 export default class VisReact extends Component {
 
