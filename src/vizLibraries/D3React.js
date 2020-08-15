@@ -10,12 +10,18 @@ export default class D3React extends Component {
             data : this.props.graph,
             myConfig: {
                 nodeHighlightBehavior: true,
+                width: 1600,
+                height: 800,
                 node: {
                     color: 'lightgreen',
-                    size: 120,
-                    highlightStrokeColor: 'blue'
+                    fontColor: "white",
+                    size: 1000,
+                    highlightStrokeColor: 'blue',
+                    labelProperty: "name",
+                    fontSize: 14
                 },
                 link: {
+                    labelProperty : "label",
                     highlightColor: 'lightblue'
                 }
             }

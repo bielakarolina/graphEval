@@ -31,7 +31,7 @@ export default class Graph extends Component {
             isLoading:false,
             graph: null,
             availLibs: ['vis', 'd3', 'cytoscape'],
-            availDataSets: ['stackoverflow', 'bbcfood', 'movies', 'Weather', 'Bank transactions'],
+            availDataSets: ['stackoverflow_small','stackoverflow_large', 'bbcfood_small', 'bbcfood_large', 'movies_small','movies_large'],
             currentLib: null,
             currentDataSet: 'Test'
         };

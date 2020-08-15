@@ -2,12 +2,15 @@ module.exports = {
 
     loadDataSetFromNeo4j : async function(dataSetType){
         const test = require("../../dataBase/test");
-        if(dataSetType === "bbcfood")
-            return await test.loadBbcFoodData();
-        else if(dataSetType === "stackoverflow")
-            return await test.loadStackOverflowData();
-        else if(dataSetType === "movies")
-            return await test.loadMoviesData();
+        if(dataSetType.includes("bbcfood"))
+            if(dataSetType.includes("large")) return await test.loadBbcFoodData(false);
+            else return await test.loadBbcFoodData();
+        else if(dataSetType.includes("stackoverflow"))
+            if(dataSetType.includes("large")) return await test.loadStackOverflowData(false);
+            else return await test.loadStackOverflowData();
+        else if(dataSetType.includes("movies"))
+            if(dataSetType.includes("large")) return await test.loadMoviesData(false);
+            else return await test.loadMoviesData();
     },
 
     getNodesStructureForLibrary : async function(libraryType){
@@ -15,9 +18,9 @@ module.exports = {
         if(libraryType === "vis")
             nodeNameProperties = ["label", "group", "properties"];
         else if(libraryType === "d3")
-            nodeNameProperties = ["label", "type", "properties"];
+            nodeNameProperties = ["name", "type", "properties"];
         else if(libraryType === "cytoscape")
-            nodeNameProperties = ["text", "type", "properties"];
+            nodeNameProperties = ["label", "type", "properties"];
         return nodeNameProperties
     },
 
@@ -27,7 +30,7 @@ module.exports = {
         if(libraryType === "vis")
             edgeNameProperties = ["from", "to", "title"];
         else if(libraryType === "d3" || libraryType === "cytoscape")
-            edgeNameProperties = ["source", "target", "title"];
+            edgeNameProperties = ["source", "target", "label"];
         return edgeNameProperties
     },
 
@@ -37,6 +40,7 @@ module.exports = {
         let nodes = [];
         let edges = [];
         let ids = {};
+        let colors=["red","pink","blue","green","white","purple","orange","yellow"]
         let groups = {};
         //console.log(libraryType);
         let nodeNameProperties = await this.getNodesStructureForLibrary(libraryType)
@@ -66,7 +70,10 @@ module.exports = {
                     };
                     if (libraryType === "cytoscape") node["group"] = "nodes";
                     let p = id["low"].toString();
+                    if (libraryType === "d3") {
+                        node["color"] = colors[node["type"]]
 
+                    };
                     if (ids[p] === undefined && libraryType !== "cytoscape") {
                         ids[p] = true;
                         nodes.push(node);
@@ -83,7 +90,6 @@ module.exports = {
                     let to = fields[index + 1];
                     let toIdentity = to["identity"];
                     if (toIdentity["low"] === 0 ) toIdentity["low"] = parseInt(to.properties["id"]);
-                    if (fromIdentity["low"] === 0 ) fromIdentity["low"] = parseInt(from.properties["id"]);
 
                     let edge = {
                         [edgeProperties[0]]: fromIdentity["low"],
@@ -92,7 +98,7 @@ module.exports = {
                     };
                     if (libraryType === "cytoscape") {
                         edge["group"] = "edges";
-                        edge["id"] = fromIdentity["low"] + toIdentity["low"];
+                        edge["id"] = `${fromIdentity["low"]}${toIdentity["low"]}`;
                         data = {...edge};
                         nodes.push({data: data});
                     } else edges.push(edge);

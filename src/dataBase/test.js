@@ -4,24 +4,7 @@ let isLoadedBbcFoodData= false;
 
 module.exports = {
 
-    simpleVisData: function () {
-        const neo = require("./neo4j");
-        let queryConnes = "LOAD CSV WITH HEADERS FROM 'file:///conn.csv' AS line\n" +
-            "Return line";
-        let queryNodes = "LOAD CSV WITH HEADERS FROM 'file:///nodes.csv' AS line\n" +
-            "Return line";
-
-        async function runQuery() {
-            let nodes = await neo.queryNeoData(queryNodes);
-            let edges = await neo.queryNeoData(queryConnes);
-
-            return {nodes: nodes, edges: edges}
-        }
-
-        return runQuery();
-
-    },
-    loadStackOverflowData: function () {
+    loadStackOverflowData: function (small=true) {
         const neo = require("./neo4j");
 
         let loadStackOverflowData = "WITH \"https://api.stackexchange.com/2.2/questions?pagesize=100&order=desc&sort=creation&tagged=java&site=stackoverflow&filter=!5-i6Zw8Y)4W7vpy91PMYsKM-k9yzEsSC1_Uxlf\" AS url\n" +
@@ -40,19 +23,21 @@ module.exports = {
             "MERGE (owner:User {id:q.owner.user_id}) ON CREATE SET owner.display_name = q.owner.display_name\n" +
             "MERGE (owner)-[:ASKED]->(question)";
 
-        let queryForDisplay = "Match (n)-[r]->(m) Return n,type(r),m limit 1000";
+        let queryForDisplay = "Match (n)-[r]->(m) Return n,type(r),m limit 100";
+        let queryForDisplayLarge = "Match (n)-[r]->(m) Return n,type(r),m limit 1000";
         let queryForDisplay1 = "MATCH (n)\n" +
             "RETURN n;";
-        let queryTestForDisplay = "Match (n:User)-[r:PROVIDED]->(m:Answer)-[k]->(q:Question)-[h]->(t:Tag) Return n,type(r),m,type(k),q,type(h),t ";
+        let queryTestForDisplay = "Match (n:User)-[r:PROVIDED]->(m:Answer)-[k]->(q:Question)-[h]->(t:Tag) Return n,type(r),m,type(k),q,type(h),t  limit 10";
+        let queryTestForDisplayLarge = "Match (n:User)-[r:PROVIDED]->(m:Answer)-[k]->(q:Question)-[h]->(t:Tag) Return n,type(r),m,type(k),q,type(h),t  limit 5000";
         async function runQuery() {
 
-            if(!isLoadedStackOverflow) {
-                await neo.queryNeoData(loadStackOverflowData,true);
-                isLoadedStackOverflow = true;
-            }
-            let testQuery = await neo.queryNeoData(queryForDisplay);
+            if(small) {
 
-            return testQuery
+                return await neo.queryNeoData(queryTestForDisplay);
+            }
+            else {
+                return await neo.queryNeoData(queryTestForDisplayLarge);
+            }
         }
 
         return runQuery();
@@ -60,29 +45,35 @@ module.exports = {
         const neo = require("./neo4j");
 
         let queryForDisplay = "MATCH (a)-[:ACTED_IN]->(m)<-[:DIRECTED]-(d) RETURN a,m,d LIMIT 10;";
-        let queryTestForDisplay = "Match (n:Person)-[r:ACTED_IN]->(m:Movie) Return n,type(r),m limit 1000 ";
-        let testQuery = {};
+        let queryTestForDisplay = "Match (n:Person)-[r:ACTED_IN]->(m:Movie) Return n,type(r),m limit 35";
+        let queryTestForDisplayLarge = "Match (n:Person)-[r:ACTED_IN]->(m:Movie) Return n,type(r),m limit 1000";
         async function runQuery() {
-            if(small) testQuery = await neo.queryNeoData(queryTestForDisplay);
-            else
-            testQuery = await neo.queryNeoData(queryTestForDisplay);
-            //await this.cleanNeo4JDataBase();
-            return testQuery
+            if(small) {
+                return await neo.queryNeoData(queryTestForDisplay)
+            }
+            else {
+               return await neo.queryNeoData(queryTestForDisplayLarge);
+            }
         }
 
         return runQuery();
     },
 
-    loadBbcFoodData: function () {
+    loadBbcFoodData: function (small=true) {
             const neo = require("./neo4j");
             let queryForDisplay1 = "Match (n)-[r]->(m) Return n,type(r),m limit 1000";
             let queryForDisplay3 = "MATCH (n1)-[r]->(n2) RETURN n1, type(r), n2 LIMIT 30";
-            let queryTestForDisplay = "Match (n:Recipe)-[r:KEYWORD]->(m:Keyword),(h:Author)-[w:WROTE]->(z:Recipe),(x:Recipe)-[k:DIET_TYPE]->(q:DietType) Where n =z and n=x Return n,type(r),m,h,type(w),z,x,type(k),q  limit 1000";
+            let queryTestForDisplay = "Match (n:Recipe)-[r:KEYWORD]->(m:Keyword),(h:Author)-[w:WROTE]->(z:Recipe),(x:Recipe)-[k:DIET_TYPE]->(q:DietType) Where n =z and n=x Return n,type(r),m,h,type(w),z,x,type(k),q  limit 100";
+            let queryTestForDisplayLarge = "Match (n:Recipe)-[r:KEYWORD]->(m:Keyword),(h:Author)-[w:WROTE]->(z:Recipe),(x:Recipe)-[k:DIET_TYPE]->(q:DietType) Where n =z and n=x Return n,type(r),m,h,type(w),z,x,type(k),q  limit 1000";
             let queryTestForDisplay1 = "Match (n:Recipe)-[r:KEYWORD]->(m:Keyword),(k:Recipe)-[d:KEYWORD]->(a:Keyword) where n<>k Return  n,type(r),k,type(d),a limit 10";
             async function runQuery() {
 
-                let testQuery = await neo.queryNeoData(queryForDisplay3);
-                return testQuery
+                if(small) {
+                    return await neo.queryNeoData(queryTestForDisplay);
+                }
+                else {
+                    return await neo.queryNeoData(queryTestForDisplayLarge);
+                }
             }
 
             return runQuery();
