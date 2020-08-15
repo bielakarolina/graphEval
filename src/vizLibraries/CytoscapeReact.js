@@ -25,6 +25,7 @@ export default class CytoscapeReact extends Component {
         this.setState({elements:elements});
     }
     render(){
+        console.log(this.state.elements)
         return <CytoscapeComponent elements={this.state.elements} stylesheet={[
             {
                 selector: 'node',

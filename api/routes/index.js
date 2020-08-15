@@ -15,8 +15,8 @@ router.get("/data/:libName/:dataSet",async function(req, res, next) {
 
     let data = await parsedData.parseNeo4jDataComponent(currentLib,dataSetName)
     //let data = await parsedData.parseNeo4jDataForD3()
-   // console.log(data)
-    if(currentLib == "cytoscape") res.send({data: {elements: data}});
+    console.log(data)
+    if(currentLib === "cytoscape") res.send({data: {elements: data}});
     else res.send({data: data});
 });
 

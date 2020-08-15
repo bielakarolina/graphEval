@@ -37,12 +37,13 @@ module.exports = {
     parseNeo4jDataComponent: async function (libraryType, dataSetType) {
         let data = await this.loadDataSetFromNeo4j(dataSetType);
         let keys = data.keys;
+        console.log(keys)
         let nodes = [];
         let edges = [];
         let ids = {};
         let colors=["red","pink","blue","green","white","purple","orange","yellow"]
         let groups = {};
-        //console.log(libraryType);
+        console.log(libraryType);
         let nodeNameProperties = await this.getNodesStructureForLibrary(libraryType)
         let edgeProperties = await this.getEdgesStructureForLibrary(libraryType)
 
@@ -61,19 +62,21 @@ module.exports = {
                         groups[label[0]] = c;
                         c += 1;
                     }
-                    if (id["low"] === 0 ) id["low"] = parseInt(properties["id"]);
+
+                    if (id["low"] === 0 || isNaN(id["low"])) id["low"] = parseInt(`${properties["id"]}${c}`) ;
+
                     let node = {
-                        id: id["low"],
+                        id: parseInt(id["low"]),
                         [nodeNameProperties[0]]: properties["title"] || properties["name"] || properties["display_name"] || label[0], //zmiana
                         [nodeNameProperties[1]]: groups[label[0]],
                         [nodeNameProperties[2]]: properties,
                     };
                     if (libraryType === "cytoscape") node["group"] = "nodes";
-                    let p = id["low"].toString();
+                    let p = id["low"];
                     if (libraryType === "d3") {
                         node["color"] = colors[node["type"]]
 
-                    };
+                    }
                     if (ids[p] === undefined && libraryType !== "cytoscape") {
                         ids[p] = true;
                         nodes.push(node);
@@ -83,13 +86,15 @@ module.exports = {
                         nodes.push({data: data});
                     }
 
+
                 } else {
                     let relationshipTitle = singleField;
                     let from = fields[index - 1];
                     let fromIdentity = from["identity"];
                     let to = fields[index + 1];
                     let toIdentity = to["identity"];
-                    if (toIdentity["low"] === 0 ) toIdentity["low"] = parseInt(to.properties["id"]);
+                    if (toIdentity["low"] === 0 || isNaN(toIdentity["low"])) toIdentity["low"] =parseInt(`${Math.round(Math.random()*10)}${c}`);
+                    if (fromIdentity["low"] === 0 || isNaN(fromIdentity["low"])) fromIdentity["low"] =parseInt(`${Math.round(Math.random()*10)}${c}`);
 
                     let edge = {
                         [edgeProperties[0]]: fromIdentity["low"],
@@ -98,14 +103,13 @@ module.exports = {
                     };
                     if (libraryType === "cytoscape") {
                         edge["group"] = "edges";
-                        edge["id"] = `${fromIdentity["low"]}${toIdentity["low"]}`;
+                        edge["id"] = `${fromIdentity["low"]}${toIdentity["low"]}edge`;
                         data = {...edge};
                         nodes.push({data: data});
                     } else edges.push(edge);
                 }
             })
         });
-        //console.log(edges);
 
         if (libraryType === "cytoscape") return nodes;
         else if (libraryType === "d3") return {nodes: nodes, links: edges};
@@ -213,7 +217,7 @@ module.exports = {
                 }
             })
         });
-        // console.log(nodes, edges);
+         console.log(nodes, edges);
         return {nodes: nodes, links: edges};
     },
     parseNeo4jDataForCytoscape: async function () {
@@ -273,6 +277,7 @@ module.exports = {
                 }
             })
         });
+        console.log(nodes)
         return nodes;
     }
 };
