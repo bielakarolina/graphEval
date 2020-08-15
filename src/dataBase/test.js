@@ -41,12 +41,16 @@ module.exports = {
         }
 
         return runQuery();
-    }, loadMoviesData: function (small = true) {
+    },
+    loadMoviesData: function (small = true) {
         const neo = require("./neo4j");
-
+        const orient = require("./orientDb")
         let queryForDisplay = "MATCH (a)-[:ACTED_IN]->(m)<-[:DIRECTED]-(d) RETURN a,m,d LIMIT 10;";
         let queryTestForDisplay = "Match (n:Person)-[r:ACTED_IN]->(m:Movie) Return n,type(r),m limit 35";
         let queryTestForDisplayLarge = "Match (n:Person)-[r:ACTED_IN]->(m:Movie) Return n,type(r),m limit 1000";
+
+        let orientQueryTest = ""
+
         async function runQuery() {
             if(small) {
                 return await neo.queryNeoData(queryTestForDisplay)

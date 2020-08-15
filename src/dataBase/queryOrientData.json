@@ -1,0 +1,253 @@
+[
+  {
+    '@class': 'Movie',
+    '@type': 'd',
+    in_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 4,
+  _prefetchedRecords: [Object]
+},
+  tagline: 'Everything that has a beginning has an end',
+  title: 'The Matrix Revolutions',
+  released: '2003',
+  in_DIRECTED: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 2,
+  _prefetchedRecords: [Object]
+},
+  in_PRODUCED: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 1,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 28, position: 4 },
+  '@version': 2
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1964',
+    name: 'Keanu Reeves',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 7,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 34, position: 16 },
+  '@version': 4
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1967',
+    name: 'Carrie-Anne Moss',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 3,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 35, position: 16 },
+  '@version': 3
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1961',
+    name: 'Laurence Fishburne',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 3,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 36, position: 16 },
+  '@version': 3
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1960',
+    name: 'Hugo Weaving',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 5,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 37, position: 16 },
+  '@version': 4
+  },
+  {
+    '@class': 'Movie',
+    '@type': 'd',
+    in_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 6,
+  _prefetchedRecords: [Object]
+},
+  tagline: 'Once in a lifetime you get a chance to do something different.',
+  title: 'A League of Their Own',
+  released: '1992',
+  in_DIRECTED: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 1,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 31, position: 0 },
+  '@version': 2
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1956',
+    name: 'Tom Hanks',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 12,
+  _prefetchedRecords: [Object]
+},
+  out_DIRECTED: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 1,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 37, position: 9 },
+  '@version': 2
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1956',
+    name: 'Geena Davis',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 1,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 40, position: 0 },
+  '@version': 2
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1963',
+    name: 'Lori Petty',
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 1,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 41, position: 0 },
+  '@version': 2
+  },
+  {
+    '@class': 'Person',
+    '@type': 'd',
+    born: '1962',
+    name: "Rosie O'Donnell",
+    out_ACTED_IN: Bag {
+  serialized: null,
+  lazy: false,
+  uuid: null,
+  _content: [Array],
+  _buffer: null,
+  _type: 0,
+  _offset: 0,
+  _current: -1,
+  _size: 2,
+  _prefetchedRecords: [Object]
+},
+  '@rid': RecordID { cluster: 34, position: 8 },
+  '@version': 2
+  }
+]
+
