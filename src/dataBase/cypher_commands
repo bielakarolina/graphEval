@@ -62,3 +62,17 @@ FOREACH (collection IN collections |
 --------------------------------------------------------------------------
 :play movies
 
+
+-----------zgrywanie do pliku
+CALL apoc.export.graphml.all("movies.graphml", {})
+CALL apoc.export.graphml.all("bbcfood.graphml", {})
+apoc.import.file.use_neo4j_config=false //dodaj do config
+
+--do usuwania
+match (a) -[r] -> () delete a, r
+match (a) delete a
+
+---console-orientdb
+CONNECT remote:localhost/test root root
+IMPORT DATABASE /Users/kbiela/Desktop/VPN/neo4j-community-4.0.7/import/stackoverflow.graphml
+CREATE DATABASE PLOCAL:/Users/kbiela/Desktop/VPN/orientdb-community-2.2.37/databases/stackoverflow

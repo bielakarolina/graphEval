@@ -17,7 +17,7 @@ module.exports = {
                     allFields.push(record._fields)
                 });
                 if (!load) keys  = records[0].keys;
-               // console.log(keys)
+                    console.log(keys)
                // if(log) console.log(allFields)
             } finally {
                 session.close();
