@@ -73,6 +73,7 @@ const options = {
         }
     },
     physics: {
+        enabled:false,
         barnesHut: {
             gravitationalConstant: -30000,
             centralGravity: 1,
@@ -82,9 +83,9 @@ const options = {
         stabilization: {iterations: 10}
     },
     interaction: {
-        hover: true,
-        hoverConnectedEdges: true,
-        selectable: true,
+        hover: false,
+        hoverConnectedEdges: false,
+        selectable: false,
         selectConnectedEdges: false,
         zoomView: true,
         navigationButtons: true,
@@ -124,6 +125,9 @@ export default class VisReact extends Component {
             },
             stabilized: function (event) {
                 this.onstabilized(event);
+            },
+            afterDrawing: function (event) {
+                this.onstabilized(event);
             }
         };
         this.state = {
@@ -139,6 +143,7 @@ export default class VisReact extends Component {
         this.events.hoverEdge = this.events.hoverEdge.bind(this);
         this.events.blurEdge = this.events.blurEdge.bind(this);
         this.events.stabilized = this.events.stabilized.bind(this);
+        this.events.afterDrawing = this.events.afterDrawing.bind(this);
         this.neighbourhoodHighlight = this.neighbourhoodHighlight.bind(this);
         this.neighbourhoodHighlightHide = this.neighbourhoodHighlightHide.bind(
             this
