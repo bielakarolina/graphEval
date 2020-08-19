@@ -1,6 +1,6 @@
-import React, { Component} from "react";
+import React, {Component, Profiler} from "react";
 import Graph from "vis-react";
-const highlightActive = false;
+let highlightActive = false;
 
 const graph = {
     nodes: [
@@ -79,7 +79,7 @@ const options = {
             springLength: 70,
             avoidOverlap: 1
         },
-        stabilization: {iterations: 1000}
+        stabilization: {iterations: 10}
     },
     interaction: {
         hover: true,
@@ -121,6 +121,9 @@ export default class VisReact extends Component {
             },
             blurEdge: function (event) {
                 this.neighbourhoodHighlightHide(event);
+            },
+            stabilized: function (event) {
+                this.onstabilized(event);
             }
         };
         this.state = {
@@ -135,6 +138,7 @@ export default class VisReact extends Component {
         this.events.blurNode = this.events.blurNode.bind(this);
         this.events.hoverEdge = this.events.hoverEdge.bind(this);
         this.events.blurEdge = this.events.blurEdge.bind(this);
+        this.events.stabilized = this.events.stabilized.bind(this);
         this.neighbourhoodHighlight = this.neighbourhoodHighlight.bind(this);
         this.neighbourhoodHighlightHide = this.neighbourhoodHighlightHide.bind(
             this
@@ -153,6 +157,10 @@ export default class VisReact extends Component {
     measure() {
         this.state.network.redraw();
         this.state.network.fit();
+    }
+
+    onstabilized(params){
+        this.props.callback()
     }
 
     neighbourhoodHighlight(params) {
@@ -323,25 +331,30 @@ export default class VisReact extends Component {
     getNodes = data => {
         console.log(data);
     };
+    onFinish() {
+        console.log( 'Heh');
+    }
 
     render() {
         const{
             graph,
-            style,
-            events
+            style
         } = this.state;
 
+
+        this.props.callfront();
+
         return (
-            <Graph
-                graph={graph}
-                options={options}
-                events={events}
-                style={style}
-                getNetwork={this.getNetwork}
-                getEdges={this.getEdges}
-                getNodes={this.getNodes}
-                vis={vis => (this.vis = vis)}
-            />
+                <Graph
+                    graph={graph}
+                    options={options}
+                    events={this.events}
+                    style={style}
+                    getNetwork={this.getNetwork}
+                    getEdges={this.getEdges}
+                    getNodes={this.getNodes}
+                    vis={vis => (this.vis = vis)}
+                />
         );
     }
 }
