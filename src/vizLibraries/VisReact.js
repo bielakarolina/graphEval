@@ -30,7 +30,7 @@ const options = {
         4: {color: "#fff400"},
         5: {color: "#f67307"},
         6: {color: "#07d8f6"},
-        7: {color: "#f4a9e6 "},
+        7: {color: "#f4a9e6"},
         8: {color: "#b73461"},
         9: {color: "#6dce3a"},
         10: {color: "#c062ea"},
@@ -79,7 +79,7 @@ const options = {
             springLength: 70,
             avoidOverlap: 1
         },
-        stabilization: {iterations: 1000}
+        stabilization: {iterations: 0}
     },
     interaction: {
         hover: true,
@@ -111,6 +111,7 @@ export default class VisReact extends Component {
         super(props);
         this.events = {
             hoverNode: function (event) {
+                console.log("DUUUUUPA")
                 this.neighbourhoodHighlight(event);
             },
             blurNode: function (event) {

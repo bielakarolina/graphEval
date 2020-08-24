@@ -33,7 +33,8 @@ export default class Graph extends Component {
             availLibs: ['vis', 'd3', 'cytoscape'],
             availDataSets: ['stackoverflow_small','stackoverflow_large', 'bbcfood_small', 'bbcfood_large', 'movies_small','movies_large'],
             currentLib: null,
-            currentDataSet: 'Test'
+            currentDataSet: 'Test',
+            isAdditional: false
         };
         this.getData = this.getData.bind(this);
         this.handleLibChange = this.handleLibChange.bind(this);

@@ -106,9 +106,9 @@ export default class Main extends Component {
 
 
     render() {
-        if(this.state.graphVisible) {
+
             return (<Graph/>)
-        }
+
         return (
             <Wrapper>
                 <Gif src={gif}/>

@@ -1,47 +1,55 @@
 module.exports = {
 
-    loadDataSetFromNeo4j : async function(dataSetType){
+    loadDataSetFromNeo4j: async function (dataSetType) {
         const test = require("../../dataBase/test");
-        if(dataSetType.includes("bbcfood"))
-            if(dataSetType.includes("large")) return await test.loadBbcFoodData(false);
+        if (dataSetType.includes("bbcfood"))
+            if (dataSetType.includes("large")) return await test.loadBbcFoodData(false);
             else return await test.loadBbcFoodData();
-        else if(dataSetType.includes("stackoverflow"))
-            if(dataSetType.includes("large")) return await test.loadStackOverflowData(false);
+        else if (dataSetType.includes("stackoverflow"))
+            if (dataSetType.includes("large")) return await test.loadStackOverflowData(false);
             else return await test.loadStackOverflowData();
-        else if(dataSetType.includes("movies"))
-            if(dataSetType.includes("large")) return await test.loadMoviesData(false);
+        else if (dataSetType.includes("movies"))
+            if (dataSetType.includes("large")) return await test.loadMoviesData(false);
             else return await test.loadMoviesData();
     },
 
-    getNodesStructureForLibrary : async function(libraryType){
+    loadAdditionalData: async function (dataSetType) {
+        const test = require("../../dataBase/test");
+        if (dataSetType.includes("large")) return await test.loadAdditionalData(false);
+        else return await test.loadAdditionalData();
+
+    },
+
+    getNodesStructureForLibrary: async function (libraryType) {
         let nodeNameProperties = []
-        if(libraryType === "vis")
+        if (libraryType === "vis")
             nodeNameProperties = ["label", "group", "properties"];
-        else if(libraryType === "d3")
+        else if (libraryType === "d3")
             nodeNameProperties = ["name", "type", "properties"];
-        else if(libraryType === "cytoscape")
+        else if (libraryType === "cytoscape")
             nodeNameProperties = ["label", "type", "properties"];
         return nodeNameProperties
     },
 
-    getEdgesStructureForLibrary : async function(libraryType){
+    getEdgesStructureForLibrary: async function (libraryType) {
         let edgeNameProperties = []
 
-        if(libraryType === "vis")
+        if (libraryType === "vis")
             edgeNameProperties = ["from", "to", "title"];
-        else if(libraryType === "d3" || libraryType === "cytoscape")
+        else if (libraryType === "d3" || libraryType === "cytoscape")
             edgeNameProperties = ["source", "target", "label"];
         return edgeNameProperties
     },
 
-    parseNeo4jDataComponent: async function (libraryType, dataSetType) {
-        let data = await this.loadDataSetFromNeo4j(dataSetType);
+    parseNeo4jDataComponent: async function (libraryType, dataSetType, additional= false) {
+        if(additional) let data = await this.loadAdditionalData(dataSetType);
+        else let data = await this.loadDataSetFromNeo4j(dataSetType);
         let keys = data.keys;
         console.log(keys)
         let nodes = [];
         let edges = [];
         let ids = {};
-        let colors=["red","pink","blue","green","white","purple","orange","yellow"]
+        let colors = ["red", "pink", "blue", "green", "white", "purple", "orange", "yellow"]
         let groups = {};
         console.log(libraryType);
         let nodeNameProperties = await this.getNodesStructureForLibrary(libraryType)
@@ -63,7 +71,7 @@ module.exports = {
                         c += 1;
                     }
 
-                    if (id["low"] === 0 || isNaN(id["low"])) id["low"] = parseInt(`${properties["id"]}${c}`) ;
+                    if (id["low"] === 0 || isNaN(id["low"])) id["low"] = parseInt(`${properties["id"]}${c}`);
 
                     let node = {
                         id: parseInt(id["low"]),
@@ -93,8 +101,8 @@ module.exports = {
                     let fromIdentity = from["identity"];
                     let to = fields[index + 1];
                     let toIdentity = to["identity"];
-                    if (toIdentity["low"] === 0 || isNaN(toIdentity["low"])) toIdentity["low"] =parseInt(`${Math.round(Math.random()*10)}${c}`);
-                    if (fromIdentity["low"] === 0 || isNaN(fromIdentity["low"])) fromIdentity["low"] =parseInt(`${Math.round(Math.random()*10)}${c}`);
+                    if (toIdentity["low"] === 0 || isNaN(toIdentity["low"])) toIdentity["low"] = parseInt(`${Math.round(Math.random() * 10)}${c}`);
+                    if (fromIdentity["low"] === 0 || isNaN(fromIdentity["low"])) fromIdentity["low"] = parseInt(`${Math.round(Math.random() * 10)}${c}`);
 
                     let edge = {
                         [edgeProperties[0]]: fromIdentity["low"],
@@ -217,7 +225,7 @@ module.exports = {
                 }
             })
         });
-         console.log(nodes, edges);
+        console.log(nodes, edges);
         return {nodes: nodes, links: edges};
     },
     parseNeo4jDataForCytoscape: async function () {
