@@ -4,6 +4,26 @@ let isLoadedBbcFoodData= false;
 
 module.exports = {
 
+    loadAdditionalData: function (small=true) {
+        const neo = require("./neo4j");
+
+        let queryForDisplay = "Match (n)-[r]->(m) Return n,type(r),m limit 100";
+        let queryForDisplayLarge = "Match (n)-[r]->(m) Return n,type(r),m limit 1000";
+
+        async function runQuery() {
+
+            if(small) {
+
+                return await neo.queryNeoData(queryForDisplay);
+            }
+            else {
+                return await neo.queryNeoData(queryForDisplayLarge);
+            }
+        }
+
+        return runQuery();
+    },
+
     loadStackOverflowData: function (small=true) {
         const neo = require("./neo4j");
 
