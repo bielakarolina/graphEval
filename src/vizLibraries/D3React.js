@@ -46,7 +46,18 @@ export default class D3React extends Component {
     onMouseOutLink(source, target) {
     };
 
-
+    onRenderCallback(
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime,
+        interactions
+    ) {
+        console.log( 'The component', id, ',',
+            'actual duration: ', actualDuration, 'base duration: ', baseDuration,' start time: ', startTime, 'commit time: ',commitTime, interactions);
+    }
     render() {
         return (
             <div>

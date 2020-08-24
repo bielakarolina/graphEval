@@ -27,6 +27,7 @@ const OptionsWrapper = styled.div`
 export default class Graph extends Component {
     constructor(props) {
         super(props);
+        this.before= Date.now();
         this.state = {
             isLoading:false,
             graph: null,
@@ -39,6 +40,8 @@ export default class Graph extends Component {
         this.getData = this.getData.bind(this);
         this.handleLibChange = this.handleLibChange.bind(this);
         this.handleDataSetChange = this.handleDataSetChange.bind(this);
+        this.onRenderEnd = this.onRenderEnd.bind(this);
+        this.onRenderStart = this.onRenderStart.bind(this);
     }
 
     async componentDidMount(){
@@ -85,6 +88,13 @@ export default class Graph extends Component {
         );
     };
 
+    onRenderEnd(){
+        console.log(Date.now() - this.before)
+    }
+    onRenderStart(){
+        this.before = Date.now();
+    }
+
     render() {
         const {
             currentLib,
@@ -100,11 +110,10 @@ export default class Graph extends Component {
                     {this.state.availLibs && this.renderOptions()}
                 </OptionsContainer>
                 {isLoading && <Title>Loading...</Title>}
-
                 {this.state.graph && currentLib && !isLoading &&
                 <GraphContainer>
-                    <Title color='pink'>Currently using: <bold>{currentLib}</bold> with Neo4J on {currentDataSet} dataset </Title>
-                    {currentLib === 'vis' && <VisReact graph={graph}/>}
+                    <Title color='pink'>Currently using: <strong>{currentLib}</strong> with Neo4J on {currentDataSet} dataset </Title>
+                    {currentLib === 'vis' && <VisReact graph={graph} callback={this.onRenderEnd} callfront={this.onRenderStart}/>}
                     {currentLib === 'd3' && <D3React graph={graph}/>}
                     {currentLib === 'cytoscape' && <CytoscapeReact graph={graph}/>}
                 </GraphContainer>
